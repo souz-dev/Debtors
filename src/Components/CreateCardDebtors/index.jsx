@@ -22,13 +22,14 @@ export function CreateCardDebtors({ users, debtores, setDebtores, newDebt }) {
       valor: debtores.value
     }
   
-    const response = await services.debtors.post(data)
+    const { data: { data: { success }}} = await services.debtors.post(data)
     setDebtores({
       UserId: '',
       description: '',
       value: ''
     })
-    if(response.status === 200){
+    console.log('res:', success);
+    if(success){
       newDebt(data)
     }
   }

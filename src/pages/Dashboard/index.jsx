@@ -18,7 +18,7 @@ export function Dashboard() {
   const [debtores, setDebtores] = useState({
     UserId: {},
     description: "",
-    value: 0,
+    value: '',
   });
 
   useEffect(() => {
@@ -51,12 +51,12 @@ export function Dashboard() {
       setDebt(debt);
     }
     dividas();
-    newDebt();
+    // newDebt();
   }, [users]);
 
 
-  function newDebt (e) {
-    
+  function newDebt (newData) {
+    setDebt((prev) => [...prev, newData])
   }
   return (
     <div id="dash-board">
@@ -93,7 +93,7 @@ export function Dashboard() {
             <div className="content-cards">
               {
                 showForm && (
-                  <CreateCardDebtors users={users} {...{ debtores, setDebtores }} {...{newDebt}} />
+                  <CreateCardDebtors users={users} {...{ debtores, setDebtores, newDebt}} />
                 )
               }
               <div>
