@@ -1,0 +1,51 @@
+#dash-board{
+  .main-dashboard {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    background-color: var(--color-head);
+    color: var(--color-black);
+    height: 200px;
+    padding: 1.5rem;
+    h1 {
+      font-size: 36px;
+      font-weight: 900;
+      margin-bottom: 2px;
+      letter-spacing: .1rem;
+    }
+
+    p {
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 2px;
+      letter-spacing: .025rem;
+    }
+ 
+  }
+  .container-dashboard {
+    width: 100%;
+    h2 {
+      font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 2px;
+    letter-spacing: .125rem;
+    }
+    .container-list {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      height: 100%;
+      margin: 16px 0;
+    }
+    .content-cards {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .content-filter {
+      width: 100%;
+    }
+  }
+}

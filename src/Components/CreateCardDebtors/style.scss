@@ -1,0 +1,72 @@
+#form {
+  width: 100%;
+  max-width: 426px;
+  height: 100%;
+  max-height: 460px;
+  background-color: var(--color-head);
+  padding: 26px;
+  border-radius: 3px;
+  header {
+    margin-bottom: 8px;
+    h3 {
+      color: #8296FB;
+      ;
+    }
+  }
+  form {
+    div {
+      margin-bottom: 8px;
+      h4 {
+        margin: 8px 0;
+        color:   #F88676;
+        ;
+        line-height: 1.5;
+        font-weight: 600;
+      }
+      .fomr-client {
+        margin-bottom: 8px;
+      }
+      input {
+        width: 300px;
+        padding: 8px;
+        border: none;
+      }
+      .input-value {
+        width: 120px;
+      }
+      
+      textarea {
+        font-size: .8rem;
+        letter-spacing: 1px;
+      }
+      textarea, .input-value {
+        padding: 10px;
+        max-width: 100%;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+      }
+    }
+    .button-container {
+      margin-top: 34px;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      button {
+        padding: 8px;
+        border-radius: 3px;
+        border: none;
+        color: #fff;
+        font-weight: bold;
+      }
+      .button-cancel {
+        background-color: #db4e4e;
+      }
+      .button-add {
+        background-color: #39a147;
+        margin-left: 34px;
+      }
+    }
+  }
+}

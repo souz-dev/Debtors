@@ -1,0 +1,21 @@
+#users-card {
+  width: 100%;
+  max-width: 426px;
+  background-color: var(--color-head);
+  padding: 26px;
+  margin-top: 8px;
+  border-radius: 3px;
+  h3 {
+    margin-bottom: 4px;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    p {
+      margin-left: 3px;
+      color: #db4e4e;
+      font-weight: 600;
+    }
+  }
+}
