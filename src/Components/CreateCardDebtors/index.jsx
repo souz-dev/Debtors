@@ -79,7 +79,7 @@ export function CreateCardDebtors({ users, debtores, setDebtores, newDebt }) {
               <button className="button-cancel">
                 Cancelar
               </button>
-              <button className="button-add">
+              <button type="submit" className="button-add">
                 Adicionar Divida
               </button>
             </div>
