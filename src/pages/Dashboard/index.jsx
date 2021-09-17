@@ -13,6 +13,9 @@ export function Dashboard() {
   const [users, setUsers] = useState([]);
   const [debt, setDebt] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [formType, setFormType] = useState('')
+  const [deleteDebt, setDeleteDebt] = useState([])
+  
 
 
   const [debtores, setDebtores] = useState({
@@ -42,17 +45,17 @@ export function Dashboard() {
         const nome = users && users?.find((u) => u.id === user.idUsuario)?.name;
         console.log("NOME", nome);
         return {
-          id: user.idUsuario,
-          motivo: user.motivo,
-          valor: user.valor,
           nome,
+          ...user
         };
       });
       setDebt(debt);
     }
     dividas();
-    // newDebt();
   }, [users]);
+
+
+  console.log(debt, 'debt')
 
 
   function newDebt (newData) {
@@ -81,6 +84,7 @@ export function Dashboard() {
                       valor={d.valor}
                       handleEdit={() => {
                         setDebtores({
+                          isEdit: true,
                           UserId: { id: d.id, name: d.nome },
                           description: d.motivo,
                           value: d.valor,
