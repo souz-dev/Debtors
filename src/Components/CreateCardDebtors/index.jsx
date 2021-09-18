@@ -1,39 +1,71 @@
-import { useEffect, useState } from 'react'
 import TextField from '@material-ui/core/TextField';
+import {useEffect} from 'react'
 import  Autocomplete  from '@material-ui/lab/Autocomplete';
 import services from '../../services';
 import './style.scss'
+import {convertToBrazil} from '../../utils/currency.js'
 
-
-export function CreateCardDebtors({ users, debtores, setDebtores, newDebt }) {
-
+export function CreateCardDebtors({ 
+  clients, 
+  debtors, 
+  setDebtors, 
+  newDebt, 
+  clearForm, 
+  showForm, 
+  setShowForm, 
+  showAddButton,
+  setShowAddButton 
+}) {
+  useEffect(()=>{
+    console.log(debtors)
+  },[debtors])
 
   const handleChange = event => {
     const { id, value } = event.target
-    setDebtores({ ...debtores, [id]: value })
+    console.log(convertToBrazil(value), 'event')
+    
+//    setDebtors({ ...debtors, [id]: formatToBRL(value.replace(/\D/gi,''))})
+setDebtors({ ...debtors, [id]: convertToBrazil(value.replace(/\D/gi,''))})
   }
+
 
 
   const onSubmit = async (event) => {
     event.preventDefault();
     const data = {
-      idUsuario: debtores.UserId.id,
-      motivo: debtores.description,
-      valor: debtores.value
+      idUsuario: debtors.UserId.id,
+      motivo: debtors.description,
+      valor:debtors.value.replace(/\D/gi , '')
     }
   
-    const { data: { data: { success }}} = await services.debtors.post(data)
-    setDebtores({
+    if(debtors.isEdit) {
+      const { data: { data: { success }}} =  await services.debtors.put( debtors.id, data)
+      if(success){
+        newDebt(data);
+        setShowForm(!showForm);
+        setShowAddButton(!showAddButton);
+        
+      }
+    } else {
+     const { data: { data: { success }}} = await services.debtors.post(data)
+     if(success){
+      newDebt(data);
+      setShowForm(!showForm);
+      setShowAddButton(!showAddButton);
+
+    }
+    }
+    setDebtors({
+      id: '',
       UserId: '',
       description: '',
       value: ''
-    })
-    console.log('res:', success);
-    if(success){
-      newDebt(data)
-    }
-  }
+    })   
 
+  }
+  
+
+  
   return (
     <div id="form">
         <header>
@@ -47,13 +79,14 @@ export function CreateCardDebtors({ users, debtores, setDebtores, newDebt }) {
               <h4 className="fomr-client">Cliente</h4>
             <Autocomplete
               id="UserId"
-              options={users}
+              options={clients}
               // groupBy={(option) => option.firstLetter}
               getOptionLabel={(users) => users.name}
               style={{ width: 300 }}
               renderInput={(params) => <TextField {...params} label="Clientes" variant="outlined" />}
-              onChange={(e,i)=> setDebtores({ ...debtores, UserId: i })}
-              value={debtores.UserId}
+              onChange={(e,i)=> setDebtors({ ...debtors, UserId: i })}
+              value={debtors.UserId}
+              disabled={debtors.isEdit}
             />
             </div>
             <div>
@@ -61,9 +94,10 @@ export function CreateCardDebtors({ users, debtores, setDebtores, newDebt }) {
               <textarea 
                 id="description" 
                 name="motivo" 
-                rows="2" cols="33" 
-                onChange={handleChange}
-                value={debtores.description}
+                rows="2" cols="33"
+                onChange={(e) => setDebtors({...debtors , description: e.target.value})}
+                value={debtors.description}
+                placeholder=" Informe o motivo"
               />
             </div>
             <div>
@@ -73,15 +107,16 @@ export function CreateCardDebtors({ users, debtores, setDebtores, newDebt }) {
                 type="text" 
                 className="input-value" 
                 onChange={handleChange}
-                value={debtores.value}
+                value={debtors.value}
+                placeholder= "R$ 100,00"
               />
             </div>
             <div className="button-container">
-              <button className="button-cancel">
+              <button type="submit" onClick={clearForm} className="button-cancel">
                 Cancelar
               </button>
               <button type="submit" className="button-add">
-                Adicionar Divida
+                {debtors.isEdit ?  "Editar" : "Adicionar"} Divida
               </button>
             </div>
           </form>

@@ -4,11 +4,8 @@ export function Header() {
   return (
     <header className="header-container">
       <div className="">
-        <img src={logo} alt="" />
+        <img src={logo} alt="Debtors" />
       </div>
-      <ul>
-        <li><button type="button">ADD</button></li>
-      </ul>
     </header>
   )
 }

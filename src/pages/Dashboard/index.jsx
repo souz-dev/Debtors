@@ -3,64 +3,104 @@ import { Header } from "../../Components/Header";
 import { CreateCardDebtors } from "../../Components/CreateCardDebtors";
 import { UsersCard } from "../../Components/UsersCard";
 import services from "../../services";
-import { useSelector, useDispatch } from "react-redux";
-import * as actions from "../../store/debt.actions";
-
+import plus from '../../assets/icons/plus.svg'
 import "./style.scss";
+
 export function Dashboard() {
-  const dividas = useSelector((x) => x.debtReducer.dividas);
-  const dispatch = useDispatch();
-  const [users, setUsers] = useState([]);
-  const [debt, setDebt] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [debts, setDebts] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [formType, setFormType] = useState('')
-  const [deleteDebt, setDeleteDebt] = useState([])
+  const [showAddButton, setShowAddButton] = useState(true);
   
 
 
-  const [debtores, setDebtores] = useState({
+  const [debtors, setDebtors] = useState({
     UserId: {},
     description: "",
     value: '',
   });
 
   useEffect(() => {
-    async function users() {
-      const { data } = await services.users.get("/users");
+    async function getUsers() {
+      const { data: {data} } = await services.users.get();
+      console.log(data, 'users')
       const clients = data.map((option) => {
         return {
           id: option.id,
           name: option.name,
         };
       });
-      setUsers(clients);
+      setClients(clients);
     }
-    users();
+    getUsers();
   }, []);
-  useEffect(() => {
-    async function dividas() {
-      const { data } = await services.debtors.get();
+  async function getDividas() {
+    const { data } = await services.debtors.get();
 
-      const debt = data.result.map((user) => {
-        const nome = users && users?.find((u) => u.id === user.idUsuario)?.name;
-        console.log("NOME", nome);
-        return {
-          nome,
-          ...user
-        };
-      });
-      setDebt(debt);
-    }
-    dividas();
-  }, [users]);
-
-
-  console.log(debt, 'debt')
-
-
-  function newDebt (newData) {
-    setDebt((prev) => [...prev, newData])
+    const getDebts = data.result.map((user) => {
+      const nome = clients && clients?.find((u) => u.id === user.idUsuario)?.name;
+      console.log("NOME", nome);
+      return {
+        nome,
+        ...user
+      };
+    });
+    setDebts(getDebts);
   }
+  useEffect(() => {
+    getDividas();
+  }, [clients]);
+
+  console.log('clients', debts)
+
+  
+   function newDebt () {
+    getDividas();
+  }
+
+  function handleEdit(d) {
+    setDebtors({
+      isEdit: true,
+      id: d._id,
+      UserId: { id: d.id, name: d.nome },
+      description: d.motivo,
+      value: d.valor,
+    });
+    setShowForm(!showForm);
+    setShowAddButton(!showAddButton);
+  }
+  
+  async function handleRemove(d) {
+    const  { data: { data: { success }}} = await services.debtors.delete(d._id);
+    if (success) {
+      getDividas();
+      setShowForm(false)
+      setShowAddButton(true)
+      setDebtors({
+        isEdit: false,
+        UserId: '',
+        description: '',
+        value: ''
+      });
+    }
+  }
+
+  function clearForm()  {
+    setDebtors({
+      isEdit: false,
+      UserId: '',
+      description: '',
+      value: ''
+    });
+    setShowForm(!showForm); 
+    setShowAddButton(!showAddButton); 
+  }
+
+  function formShow() {
+    setShowForm(!showForm); 
+    setShowAddButton(!showAddButton); 
+  }
+
   return (
     <div id="dash-board">
       <Header />
@@ -76,37 +116,59 @@ export function Dashboard() {
               <h2>Credores</h2>
 
               <ul>
-                {debt.length > 0 &&
-                  debt.map((d) => (
+                {
+                  debts.length === 0 && (
+                    <p> Não Dividas Registradas</p>
+                  )
+                }
+                {debts.length > 0 &&
+                  debts.map((d) => (
                     <UsersCard
                       clitente={d.nome}
                       motivo={d.motivo}
                       valor={d.valor}
-                      handleEdit={() => {
-                        setDebtores({
-                          isEdit: true,
-                          UserId: { id: d.id, name: d.nome },
-                          description: d.motivo,
-                          value: d.valor,
-                        });
-                      }}
+                      handleEdit={ () => handleEdit(d)} 
+                      hanldleRemove={ () => handleRemove(d)}
                     />
                   ))}
               </ul>
             </div>
             <div className="content-cards">
               {
-                showForm && (
-                  <CreateCardDebtors users={users} {...{ debtores, setDebtores, newDebt}} />
+                showForm && ( 
+                  <CreateCardDebtors  
+                    {...
+                      { 
+                        debtors, 
+                        setDebtors, 
+                        newDebt, 
+                        clients, 
+                        showForm, 
+                        setShowForm,
+                        showAddButton,
+                        setShowAddButton
+                      }
+                    } 
+                    clearForm={clearForm} 
+                  />
+                  
                 )
               }
-              <div>
-                <button onClick={() => setShowForm(!showForm)}> Add Debtors</button>
-              </div>
             </div>
           </div>
         </div>
       </section>
+      { 
+        showAddButton && (
+          <div onClick={formShow} className="fixed-button">
+          <a className="btn-floating btn-large">
+            <i>
+              <img src={plus} alt="Adicionar Divida" />        
+            </i>    
+          </a>
+        </div>
+        )
+      }
     </div>
   );
 }

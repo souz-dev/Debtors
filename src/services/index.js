@@ -1,5 +1,5 @@
 import axios from 'axios'
-// import usersService from './users'
+import usersService from './users'
 import debtorsService from './debtors'
 const API_ENVS = {
   users: 'https://jsonplaceholder.typicode.com',
@@ -16,6 +16,6 @@ const httpDebtors = axios.create({
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  users: httpUsers,
+  users: usersService(httpUsers),
   debtors: debtorsService(httpDebtors)
 }

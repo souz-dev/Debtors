@@ -25,7 +25,7 @@ export default httpDebtors => ({
     const uuid = 'fa63607c-e56e-48c8-9a52-7360294e4deb'
     const response = await httpDebtors.delete(`/divida/${id}/?uuid=${uuid}`)
     return {
-      data: response.data
+      data: response
     }
   }
 })
