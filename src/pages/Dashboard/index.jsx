@@ -7,7 +7,6 @@ import plus from '../../assets/icons/plus.svg'
 import "./style.scss";
 import {convertToBrazil} from '../../utils/currency.js'
 
-
 export function Dashboard() {
   const [clients, setClients] = useState([]);
   const [debts, setDebts] = useState([]);
@@ -40,7 +39,6 @@ export function Dashboard() {
 
     const getDebts = data.result.map((user) => {
       const nome = clients && clients?.find((u) => u.id === user.idUsuario)?.name;
-      console.log("NOME", nome);
       return {
         nome,
         ...user
@@ -51,8 +49,6 @@ export function Dashboard() {
   useEffect(() => {
     getDividas();
   }, [clients]);
-
-  console.log('clients', debts)
 
   
    function newDebt () {

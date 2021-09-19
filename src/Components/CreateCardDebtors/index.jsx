@@ -22,7 +22,6 @@ export function CreateCardDebtors({
 
   const handleChange = (event) => {
     const { id, value } = event.target;
-    console.log(convertToBrazil(value), "event");
 
     //    setDebtors({ ...debtors, [id]: formatToBRL(value.replace(/\D/gi,''))})
     setDebtors({

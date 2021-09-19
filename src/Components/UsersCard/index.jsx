@@ -5,7 +5,6 @@ import {convertToBrazil} from '../../utils/currency.js'
 
 
 export function UsersCard({clitente, motivo, valor, handleEdit, hanldleRemove}) {
-  console.log(clitente)
   return (
     <li id="users-card">
       <header className="header-card">
