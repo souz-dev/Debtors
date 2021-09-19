@@ -5,6 +5,8 @@ import { UsersCard } from "../../Components/UsersCard";
 import services from "../../services";
 import plus from '../../assets/icons/plus.svg'
 import "./style.scss";
+import {convertToBrazil} from '../../utils/currency.js'
+
 
 export function Dashboard() {
   const [clients, setClients] = useState([]);
@@ -63,7 +65,7 @@ export function Dashboard() {
       id: d._id,
       UserId: { id: d.id, name: d.nome },
       description: d.motivo,
-      value: d.valor,
+      value: convertToBrazil(d.valor),
     });
     setShowForm(!showForm);
     setShowAddButton(!showAddButton);
