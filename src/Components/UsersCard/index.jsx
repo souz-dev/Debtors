@@ -11,10 +11,10 @@ export function UsersCard({clitente, motivo, valor, handleEdit, hanldleRemove}) 
       <header className="header-card">
       <h3>{ clitente }</h3>
       <div className="buttons-content">
-      <div onClick={handleEdit}>
+      <div onClick={handleEdit} className="button-edit">
         <img src={iconEdit} alt="" />
       </div>
-      <div onClick={hanldleRemove}>
+      <div onClick={hanldleRemove} className="button-delete">
         <img src={iconDelete} alt="" />
       </div>
       </div>
