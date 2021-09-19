@@ -61,12 +61,15 @@
         font-weight: bold;
       }
       .button-cancel {
-        background-color: #db4e4e;
+        background-color: var(--color-red);
       }
       .button-add {
-        background-color: #39a147;
+        background-color: var(--color-green);
         margin-left: 34px;
       }
     }
+  }
+  .empty {
+    color: var(--color-red);
   }
 }

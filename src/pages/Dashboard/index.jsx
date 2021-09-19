@@ -23,7 +23,6 @@ export function Dashboard() {
   useEffect(() => {
     async function getUsers() {
       const { data: {data} } = await services.users.get();
-      console.log(data, 'users')
       const clients = data.map((option) => {
         return {
           id: option.id,
