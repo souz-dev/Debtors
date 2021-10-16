@@ -87,7 +87,7 @@ export function CreateCardDebtors({
               options={clients}
               // groupBy={(option) => option.firstLetter}
               getOptionLabel={(users) => users.name}
-              style={{ width: 300 }}
+              style={{ width: "100%" }}
               renderInput={(params) => (
                 <TextField {...params} label="Clientes" variant="outlined" />
               )}
@@ -106,6 +106,7 @@ export function CreateCardDebtors({
               onChange={(e) =>
                 setDebtors({ ...debtors, description: e.target.value })
               }
+              style={{ width: "100%" }}
               value={debtors.description}
               placeholder=" Informe o motivo"
             />
@@ -122,7 +123,9 @@ export function CreateCardDebtors({
             />
           </div>
           {emptyValue && (
-            <span className="empty">Todos os campos devem está preechidos !!</span>
+            <span className="empty">
+              Todos os campos devem está preechidos !!
+            </span>
           )}
           <div className="button-container">
             <button type="submit" onClick={clearForm} className="button-cancel">
